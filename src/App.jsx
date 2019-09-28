@@ -5,6 +5,7 @@ import { getFonts, getImage } from "./api";
 import Spinner from "./components/Spinner/Spinner.jsx";
 
 export default () => {
+  const [isShown, setIsShown] = useState(false);
   const [fonts, setFonts] = useState([]);
   const [fontSize, setFontSize] = useState("50");
   const [fontId, setFontId] = useState(1);
@@ -33,6 +34,7 @@ The third line of text`);
       try {
         const { data } = await getFonts();
         setFonts(data.fonts);
+        setIsShown(true);
       } catch (err) {
         alert(err);
       }
@@ -43,46 +45,54 @@ The third line of text`);
     <div className="App">
       <div className="form">
         <h1>Font Preview</h1>
-        <div className="row">
-          <div className="label">Font Size</div>
-          <input
-            className="input"
-            type="text"
-            value={fontSize}
-            onChange={e => setFontSize(e.target.value)}
-          />
-        </div>
-        <div className="row">
-          <div className="label">Font Family</div>
-          <select
-            className="select"
-            value={fontId}
-            onChange={e => setFontId(e.target.value)}
-          >
-            {fonts.map((font, i) => (
-              <option value={font.id} key={i}>
-                {font.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="row">
-          <div className="label">Text</div>
-          <textarea
-            className="textarea"
-            value={text}
-            onChange={e => setText(e.target.value)}
-          ></textarea>
-        </div>
-        <div className="row row-button">
-          {isDownloading ? (
-            <Spinner />
-          ) : (
-            <button className="button" type="button" onClick={fetchImage}>
-              Download Image
-            </button>
-          )}
-        </div>
+        {isShown ? (
+          <>
+            <div className="row">
+              <div className="label">Font Size</div>
+              <input
+                className="input"
+                type="text"
+                value={fontSize}
+                onChange={e => setFontSize(e.target.value)}
+              />
+            </div>
+            <div className="row">
+              <div className="label">Font Family</div>
+              <select
+                className="select"
+                value={fontId}
+                onChange={e => setFontId(e.target.value)}
+              >
+                {fonts.map((font, i) => (
+                  <option value={font.id} key={i}>
+                    {font.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="row">
+              <div className="label">Text</div>
+              <textarea
+                className="textarea"
+                value={text}
+                onChange={e => setText(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="row row-button">
+              {isDownloading ? (
+                <Spinner />
+              ) : (
+                <button className="button" type="button" onClick={fetchImage}>
+                  Download Image
+                </button>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="preloader">
+            <Spinner /> Fetching font options..
+          </div>
+        )}
       </div>
     </div>
   );
