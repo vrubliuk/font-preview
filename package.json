@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:prod": "cross-env REACT_APP_API_URL=https://font-glyphs-preview.herokuapp.com/api react-scripts start",
-    "build": "cross-env REACT_APP_API_URL=https://font-glyphs-preview.herokuapp.com/ap react-scripts build",
+    "build": "cross-env REACT_APP_API_URL=https://font-glyphs-preview.herokuapp.com/api react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
